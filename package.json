@@ -1,0 +1,17 @@
+{
+  "name": "ES6Exercicios",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/netohelvecio/ES6Exercicios.git",
+  "author": "Helvecio Neto <helvecioneto77@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5"
+  },
+  "scripts": {
+    "dev": "babel ./modulo1/modulo1.js -o ./bundle.js -w"
+  }
+}
