@@ -5,13 +5,18 @@
   "repository": "https://github.com/netohelvecio/ES6Exercicios.git",
   "author": "Helvecio Neto <helvecioneto77@gmail.com>",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/preset-env": "^7.5.5"
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "8.0.0-beta.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.8.0"
   },
   "scripts": {
-    "dev": "babel ./modulo1/modulo1.js -o ./bundle.js -w"
+    "dev": "webpack-dev-server --mode=development",
+    "build": "webpack  --mode=production"
   }
 }
