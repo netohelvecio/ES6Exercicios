@@ -1,73 +1,102 @@
-//EXERCICIO 1
+import api from './api';
 
-// Funão delay aciona o .then após 1s
-const delay = () => new Promise(resolve => setTimeout(resolve, 1000));
-
-async function oneSecond() {
-    try {
-        await delay(console.log('1s'));
-        await delay(console.log('2s'));
-        await delay(console.log('3s'));
-        await delay(console.log('4s'));
-        await delay(console.log('5s'));
-    } catch (error) {
-        console.warn('error');
+class GitHubUser {
+    constructor() {
+        this.user = {};
+        this.formGit = document.getElementById('formGit');
+        this.listaDados = document.getElementById('listaDados');
+        this.imgUser = document.getElementById('imgUser');
+        this.card = document.getElementById('card');
+        this.nomeUser = document.getElementById('nomeUser');
+        this.inputBuscaGit = document.getElementById('inputBuscaGit');
+        this.registraEventos();
     }
-}
 
-oneSecond();
-
-
-
-
-//EXERCICIO 2
-
-import axios from 'axios';
-
-async function getUserFromGithub(user) {
-    try {
-        const dados = await axios.get(`https://api.github.com/users/${user}`);
-        console.log(dados);
-    } catch (error) {
-        console.warn('Usuario inexistente');
+    registraEventos() {
+        this.formGit.onsubmit = event => this.addUser(event);
     }
-}
-getUserFromGithub('diego3g');
-getUserFromGithub('diego3g124123');
 
+    loading(loading = true) {
+        if (loading === true) {
+            let carregando = document.createElement('span');
+            carregando.appendChild(document.createTextNode('Carregando...'));
+            carregando.setAttribute('id', 'carregando');
+            this.card.appendChild(carregando);
+        } else {
+            document.getElementById('carregando').remove();
+        }
+    }
 
+    async addUser(event) {
+        event.preventDefault();
 
+        this.listaDados.innerHTML = '';
+        this.imgUser.innerHTML = '';
+        this.nomeUser.innerHTML = '';
 
+        const usuario = this.inputBuscaGit.value;
 
-//EXERCICIO 3
+        if (usuario === '') {
+            alert('Informe um usuário!');
+            return;
+        }
 
-class Github {
-    static async getRepositories(repo) {
+        this.loading();
+
         try {
-            const dados = await axios.get(`https://api.github.com/repos/netohelvecio/${repo}`);
-            console.log(dados);
+            const response = await api.get(`/users/${usuario}`);
+            const { name, login, avatar_url, html_url, location, email } = response.data;
+
+            this.user = {
+                name,
+                login,
+                avatar_url,
+                html_url,
+                location,
+                email
+            }
+            this.exibeCard();
         } catch (error) {
-            console.warn('Repositório não existe');
-        };
+            alert('Usuário Inexistente!')
+        }
+
+        this.inputBuscaGit.value = '';
+        this.loading(false);
+    }
+
+    exibeCard() {
+        let avatarCard = document.createElement('img');
+        avatarCard.setAttribute('src', this.user.avatar_url);
+
+        let nomeCard = document.createElement('h3');
+        nomeCard.appendChild(document.createTextNode(this.user.name));
+
+        let loginCard = document.createElement('li');
+        loginCard.appendChild(document.createTextNode(this.user.login));
+
+        let locationCard = document.createElement('li');
+        locationCard.appendChild(document.createTextNode(this.user.location));
+
+        let emailCard = document.createElement('li');
+        emailCard.appendChild(document.createTextNode(this.user.email));
+
+        let urlCard = document.createElement('li');
+        //urlCard.appendChild(document.createTextNode(this.user.html_url));
+
+        let linkCard = document.createElement('a');
+        linkCard.setAttribute('target', '_blank');
+        linkCard.setAttribute('href', this.user.html_url);
+        linkCard.appendChild(document.createTextNode(this.user.html_url));
+        urlCard.appendChild(linkCard);
+
+        listaDados.appendChild(locationCard);
+        listaDados.appendChild(loginCard);
+        listaDados.appendChild(emailCard);
+        listaDados.appendChild(urlCard);
+
+        this.imgUser.appendChild(avatarCard);
+        this.nomeUser.appendChild(nomeCard);
     }
 }
-Github.getRepositories('ES6Exercicios');
-Github.getRepositories('rocketseat/dslkvmskv');
 
-
-
-
-
-//EXERCICIO 4
-
-const buscaUsuario = async usuario => {
-    try {
-        const dados = await axios.get(`https://api.github.com/users/${usuario}`);
-        console.log(dados);
-    } catch (error) {
-        console.warn('Usuario Inexistente!');
-    }
-    
-}
-
-buscaUsuario('netohelvecio');
+new GitHubUser();

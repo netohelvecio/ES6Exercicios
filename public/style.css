@@ -1,0 +1,54 @@
+* {
+    box-sizing: bordex-box;
+}
+
+.div-principal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(#25d62d, #d0f3dd);
+}
+
+.centraliza {
+    margin: 15px auto;
+    text-align: center;
+}
+
+.div-header h1 {
+    font-family: 'Karla', sans-serif;
+}
+
+.centraliza label {
+    font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 30px;
+    margin: 15px auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, .12);
+    font-family: 'Roboto', sans-serif;
+}
+
+.card-titulo {
+    margin: 5px auto;
+    font-family: 'Roboto', sans-serif;
+}
+
+.card img {
+    width: 298px;
+    height: 200px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card .card-info {
+    color: #808080;
+}
+
+span{
+    margin: 2px auto;
+    text-align: center;
+}
